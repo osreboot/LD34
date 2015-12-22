@@ -15,6 +15,8 @@ import com.osreboot.ridhvl.action.HvlAction1;
 import com.osreboot.ridhvl.config.HvlConfigUtil;
 import com.osreboot.ridhvl.display.collection.HvlDisplayModeDefault;
 import com.osreboot.ridhvl.input.HvlInput;
+import com.osreboot.ridhvl.input.collection.HvlCPG_Gamepad;
+import com.osreboot.ridhvl.menu.HvlMenuInteractor;
 import com.osreboot.ridhvl.painter.painter2d.HvlFontPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
@@ -59,11 +61,13 @@ public class Main extends HvlTemplateInteg2D{
 			CLR_SHADE = new Color(0f, 0f, 0f, 0.9f);
 
 	public static HvlFontPainter2D fontLarge, fontSmall;
+	
+	public static HvlCPG_Gamepad profile;
 
 	public static HvlInput mute = new HvlInput(new HvlInput.InputFilter(){
 		@Override
 		public float getCurrentOutput() {
-			return Keyboard.isKeyDown(Keyboard.KEY_M) ? 1 : 0;
+			return Keyboard.isKeyDown(Keyboard.KEY_M) || profile.getValue(HvlCPG_Gamepad.BUTTON_BACK) == 1 ? 1 : 0;
 		}
 	});
 
@@ -71,6 +75,8 @@ public class Main extends HvlTemplateInteg2D{
 	public void initialize(){
 		getTimer().setMaxDelta(HvlTimer.MD_TENTH);
 
+		profile = new HvlCPG_Gamepad();
+		
 		HvlConfigUtil.loadStaticConfig(Save.class, "res/Save.txt");
 		HvlConfigUtil.saveStaticConfig(Save.class, "res/Save.txt");
 
@@ -101,6 +107,28 @@ public class Main extends HvlTemplateInteg2D{
 		getSoundLoader().loadResource("Ambient2");
 		getSoundLoader().loadResource("Click1");
 		getSoundLoader().loadResource("Click2");
+		
+		HvlMenuInteractor.setFilters(new HvlInput.InputFilter(){
+			@Override
+			public float getCurrentOutput(){
+				return profile.getValue(HvlCPG_Gamepad.DIRECTION_UP);
+			}
+		}, new HvlInput.InputFilter(){
+			@Override
+			public float getCurrentOutput(){
+				return profile.getValue(HvlCPG_Gamepad.DIRECTION_DOWN);
+			}
+		}, new HvlInput.InputFilter(){
+			@Override
+			public float getCurrentOutput(){
+				return profile.getValue(HvlCPG_Gamepad.BUTTON_A);
+			}
+		}, new HvlInput.InputFilter(){
+			@Override
+			public float getCurrentOutput(){
+				return profile.isRangeActive(HvlCPG_Gamepad.RANGE_ALL) ? 1 : 0;
+			}
+		});
 
 		fontLarge = new HvlFontPainter2D(getTexture(IDX_FONTLARGE), "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/\\'\")(][?!.,_@*^-+=|;:><abcdefghijklmnopqrstuvwxyz".toCharArray(), 6f, 11f, 0f, 4f);
 		fontSmall = new HvlFontPainter2D(getTexture(IDX_FONTSMALL), "abcdefghijklmnopqrstuvwxyz0123456789/\\'\")(][?!.,_@*^-+=|:;><".toCharArray(), 4f, 7f, 0f, 4f);
@@ -134,6 +162,7 @@ public class Main extends HvlTemplateInteg2D{
 	
 	@Override
 	public void update(float delta){
+		
 		timeSinceSound = HvlMath.stepTowards(timeSinceSound, delta, 0);
 		if(timeSinceSound == 0 && !Save.muted){
 			getSound(0).playAsSoundEffect(Math.random() > 0.5 ? 1 : 2, 0.1f, false);
