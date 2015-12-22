@@ -60,7 +60,7 @@ public class Main extends HvlTemplateInteg2D{
 
 	public static HvlFontPainter2D fontLarge, fontSmall;
 
-	public static HvlInput mute = new HvlInput(new HvlInput.HvlInputFilter(){
+	public static HvlInput mute = new HvlInput(new HvlInput.InputFilter(){
 		@Override
 		public float getCurrentOutput() {
 			return Keyboard.isKeyDown(Keyboard.KEY_M) ? 1 : 0;
