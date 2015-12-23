@@ -37,7 +37,7 @@ public class Menus {
 		defaultArrangerBox.setyAlign(0.5f);
 		HvlComponentDefault.setDefault(defaultArrangerBox);
 
-		buttonRect = new HvlTiledRect(Main.getTexture(Main.IDX_BORDER), 0.125f, 0.875f, 0.125f, 0.875f, 0, 0, 32, 32, 4, 4);
+		buttonRect = new HvlTiledRect(Main.getTexture(Main.IDX_BORDER), 0.125f, 0.875f, 0.125f, 0.875f, 0, 0, 4, 4);
 
 		HvlComponentDefault.setDefault(new HvlLabeledButton(0, 0, 0, Main.fontLarge.getFontHeight(), new HvlComponentDrawable(){
 			@Override

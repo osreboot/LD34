@@ -130,6 +130,19 @@ public class Level {
 			return offsetFine;
 		}
 
+		public void setOffset(float offsetFineArg){
+			offsetFine = HvlMath.limit(offsetFineArg, -(gates.length - level.paths) * SLIDER_GATE_HEIGHT, 0 * SLIDER_GATE_HEIGHT);
+			offset = Math.round((offsetFine)/SLIDER_GATE_HEIGHT);
+			if(previousOffset != offset){
+				if(!Save.muted) Main.getSound(2).playAsSoundEffect(4.5f, 0.2f, false);
+				previousOffset = offset;
+			}
+		}
+		
+		public int getGateLength(){
+			return gates.length;
+		}
+
 		public void update(float delta){
 			if(Mouse.isButtonDown(0) && !Game.isLocked()){
 				if(!isDragging){

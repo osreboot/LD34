@@ -51,7 +51,8 @@ public class Main extends HvlTemplateInteg2D{
 			IDX_SERVER_LARGE = 18,
 			IDX_SERVER_HUGE = 19,
 			IDX_GATE_ON = 20,
-			IDX_UIMASK = 21;
+			IDX_UIMASK = 21,
+			IDX_POINT = 22;
 
 	public static final float LARGE_SCREEN_YCENTER = 720/64*23,
 			LARGE_SCREEN_XSTART = 200,
@@ -102,6 +103,7 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("ServerHuge");
 		getTextureLoader().loadResource("GateOn");
 		getTextureLoader().loadResource("UIMask");
+		getTextureLoader().loadResource("Point");
 
 		getSoundLoader().loadResource("Ambient1");
 		getSoundLoader().loadResource("Ambient2");
@@ -111,12 +113,12 @@ public class Main extends HvlTemplateInteg2D{
 		HvlMenuInteractor.setFilters(new HvlInput.InputFilter(){
 			@Override
 			public float getCurrentOutput(){
-				return profile.getValue(HvlCPG_Gamepad.DIRECTION_UP);
+				return profile.getValue(HvlCPG_Gamepad.JOY1X) < -0.8f || profile.getValue(HvlCPG_Gamepad.JOY2X) < -0.8f ? 1 : 0;
 			}
 		}, new HvlInput.InputFilter(){
 			@Override
 			public float getCurrentOutput(){
-				return profile.getValue(HvlCPG_Gamepad.DIRECTION_DOWN);
+				return profile.getValue(HvlCPG_Gamepad.JOY1X) > 0.8f || profile.getValue(HvlCPG_Gamepad.JOY2X) > 0.8f ? 1 : 0;
 			}
 		}, new HvlInput.InputFilter(){
 			@Override
@@ -136,6 +138,7 @@ public class Main extends HvlTemplateInteg2D{
 		Levels.initialize();
 		Menus.initialize();
 		Sequencer.initialize();
+		Game.initialize();
 
 		writeToTerminal("initialize", 0f, false);
 		writeToTerminal("initializing... 1", 3f, false);
