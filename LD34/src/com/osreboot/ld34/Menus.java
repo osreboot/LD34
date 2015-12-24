@@ -8,7 +8,7 @@ import org.newdawn.slick.Color;
 import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.action.HvlAction1;
 import com.osreboot.ridhvl.action.HvlAction2;
-import com.osreboot.ridhvl.config.HvlConfigUtil;
+import com.osreboot.ridhvl.configold.HvlConfigUtil;
 import com.osreboot.ridhvl.menu.HvlComponentDefault;
 import com.osreboot.ridhvl.menu.HvlMenu;
 import com.osreboot.ridhvl.menu.component.HvlArrangerBox;

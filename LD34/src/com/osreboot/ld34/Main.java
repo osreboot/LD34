@@ -12,7 +12,7 @@ import org.newdawn.slick.Color;
 import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.HvlTimer;
 import com.osreboot.ridhvl.action.HvlAction1;
-import com.osreboot.ridhvl.config.HvlConfigUtil;
+import com.osreboot.ridhvl.configold.HvlConfigUtil;
 import com.osreboot.ridhvl.display.collection.HvlDisplayModeDefault;
 import com.osreboot.ridhvl.input.HvlInput;
 import com.osreboot.ridhvl.input.collection.HvlCPG_Gamepad;
